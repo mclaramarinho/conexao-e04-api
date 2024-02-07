@@ -1,1 +1,3 @@
 /.env
+/test_resources/
+/.idea/discord.xml
