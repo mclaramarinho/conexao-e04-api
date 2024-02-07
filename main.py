@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from os import environ
-from pymongo import MongoClient
 import uvicorn
 from router.event_routes import router as event_router
 from router.faq_routes import router as faq_router
@@ -20,14 +18,11 @@ async def root():
 
 @app.on_event("startup")
 def startup_db_client():
-    #app.mongodb_client = MongoClient(environ["ATLAS_URI"])
-    #app.database = app.mongodb_client[environ["DB_NAME"]]
     print(f"Connected")
 
 
 @app.on_event("shutdown")
 def shutdown_db_client():
-    #app.mongodb_client.close()
     print("Mongo db client closed")
 
 
