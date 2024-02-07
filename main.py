@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from dotenv import dotenv_values
+from dotenv import load_dotenv
+from os import environ
 from pymongo import MongoClient
 import uvicorn
 from router.event_routes import router as event_router
@@ -8,8 +9,7 @@ from router.class_routes import router as class_router
 from router.contact_routes import router as contact_router
 from router.admin_routes import router as admin_router
 
-config = dotenv_values(".env")
-
+load_dotenv()
 
 app = FastAPI()
 
@@ -21,8 +21,8 @@ async def root():
 
 @app.on_event("startup")
 def startup_db_client():
-    app.mongodb_client = MongoClient(config["ATLAS_URI"])
-    app.database = app.mongodb_client[config["DB_NAME"]]
+    app.mongodb_client = MongoClient(environ["ATLAS_URI"])
+    app.database = app.mongodb_client[environ["DB_NAME"]]
     print(f"Connected to {app.database}")
 
 
