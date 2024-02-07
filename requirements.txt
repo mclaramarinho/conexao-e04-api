@@ -1,0 +1,4 @@
+FastAPI
+uvicorn
+python-dotenv
+pymongo
