@@ -7,6 +7,7 @@ from models.Admin import Admin
 from models.AdminUpdate import AdminUpdate
 from api_keys import get_api_key
 
+
 COLLECTION_NAME = "admins"
 EXCEPTION_404_NOT_FOUND = exception_404("Admin")
 RESPONSE_DES = response_descriptions("admin")

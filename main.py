@@ -13,7 +13,6 @@ load_dotenv()
 
 app = FastAPI()
 
-
 @app.get("/")
 async def root():
     return {"message": "MongoDB - Root"}
@@ -21,14 +20,14 @@ async def root():
 
 @app.on_event("startup")
 def startup_db_client():
-    app.mongodb_client = MongoClient(environ["ATLAS_URI"])
-    app.database = app.mongodb_client[environ["DB_NAME"]]
-    print(f"Connected to {app.database}")
+    #app.mongodb_client = MongoClient(environ["ATLAS_URI"])
+    #app.database = app.mongodb_client[environ["DB_NAME"]]
+    print(f"Connected")
 
 
 @app.on_event("shutdown")
 def shutdown_db_client():
-    app.mongodb_client.close()
+    #app.mongodb_client.close()
     print("Mongo db client closed")
 
 
