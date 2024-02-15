@@ -39,20 +39,20 @@ def update_one(id: str, collection: str, req: Request, body, exception: HTTPExce
         if v is not None
     }
 
+    mongo_id = id
+    if collection == "admins":
+        mongo_id = db[collection].find_one({"firebase_uid": id})
+        if mongo_id is not None:
+            mongo_id = mongo_id["_id"]
+
     if len(body) >= 1:
-        if collection == "admins":
-            update_result = db[collection].update_one(
-                {"firebase_uid": id}, {"$set": body}
-            )
-        else:
-            update_result = db[collection].update_one(
-                {"_id": id}, {"$set": body}
-            )
+        print(mongo_id)
+        update_result = db[collection].update_one(
+            {"_id": mongo_id}, {"$set": body}
+        )
 
-        if update_result.modified_count == 0:
-            raise exception
-
-    if (existing_class := db[collection].find_one({"_id": id})) is not None:
+    if (existing_class := db[collection].find_one({"_id": mongo_id})) is not None:
+        print(existing_class)
         return existing_class
 
     raise exception
