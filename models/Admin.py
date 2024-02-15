@@ -1,3 +1,4 @@
+import datetime
 from uuid import uuid4
 from pydantic import BaseModel, Field
 
@@ -12,7 +13,7 @@ class Admin(BaseModel):
     role: str = Field(...)
     last_login: str = Field(...)
 
-    creation_date_timestamp: str = Field(...)
+    creation_date_timestamp: str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
 
     class Config:
         allow_population_by_field_name = True
