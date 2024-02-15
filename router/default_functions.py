@@ -4,7 +4,10 @@ from database import db
 
 
 def get_one(id: str, collection: str, req: Request, exception: HTTPException):
-    response = db[collection].find_one({"_id": id})
+    if collection == "admins":
+        response = db[collection].find_one({"firebase_uid": id})
+    else:
+        response = db[collection].find_one({"_id": id})
 
     if response is not None:
         return response
