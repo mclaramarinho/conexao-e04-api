@@ -11,7 +11,7 @@ class Admin(BaseModel):
     name: str = Field(...)
     email: str = Field(...)
     role: str = Field(...)
-    last_login: str = Field(...)
+    last_login: str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
 
     creation_date_timestamp: str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
 
