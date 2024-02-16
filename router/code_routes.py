@@ -75,13 +75,11 @@ def validate_code(req: Request, input_content:OnlyCode=Body(...), api_key: str =
             valid_code = code
             is_valid = True
             break
-    print(valid_code)
     if is_valid:
         try:
             pr = db[COLLECTION_NAME].update_one({"_id": valid_code['_id']}, {"$set": {
                 "expired": True
             }})
-            print(pr)
             if pr.modified_count > 0:
                 return valid_code
             else:
