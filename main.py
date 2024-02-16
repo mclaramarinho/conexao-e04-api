@@ -28,10 +28,11 @@ def shutdown_db_client():
 
 
 app.add_middleware(CORSMiddleware,
-                   allow_origins=["*"],
+                   allow_origins=["*", "http://localhost:5173/"],
                    allow_credentials=True,
                    allow_methods=["*"],
-                   allow_headers=["*"])
+                   allow_headers=["*"],
+                   )
 
 app.include_router(event_router, tags=["events"], prefix="/api/events")
 app.include_router(faq_router, tags=["faq", 'frequently asked questions'], prefix="/api/faq")
