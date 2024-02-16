@@ -17,6 +17,7 @@ def get_one(id: str, collection: str, req: Request, exception: HTTPException):
 
 def get_all(collection: str, req: Request):
     response = list(db[collection].find(limit=100))
+    print(response)
     return response
 
 
@@ -46,7 +47,6 @@ def update_one(id: str, collection: str, req: Request, body, exception: HTTPExce
             mongo_id = mongo_id["_id"]
 
     if len(body) >= 1:
-        print(mongo_id)
         update_result = db[collection].update_one(
             {"_id": mongo_id}, {"$set": body}
         )

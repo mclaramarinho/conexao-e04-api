@@ -6,6 +6,7 @@ from router.faq_routes import router as faq_router
 from router.class_routes import router as class_router
 from router.contact_routes import router as contact_router
 from router.admin_routes import router as admin_router
+from router.code_routes import router as code_router
 from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 
@@ -37,6 +38,7 @@ app.include_router(faq_router, tags=["faq", 'frequently asked questions'], prefi
 app.include_router(class_router, tags=["class"], prefix="/api/class")
 app.include_router(contact_router, tags=['contact'], prefix="/api/contact")
 app.include_router(admin_router, tags=['admin'], prefix="/api/admin")
+app.include_router(code_router, tags=["code"], prefix="/api/code")
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8080)
