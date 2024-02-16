@@ -82,7 +82,7 @@ def validate_code(req: Request, input_content:OnlyCode=Body(...), api_key: str =
                 "expired": True
             }})
 
-            if pr.modified_count > 0:
+            if pr.acknowledged:
                 return valid_code
             else:
                 raise
