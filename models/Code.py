@@ -7,7 +7,8 @@ from pydantic import BaseModel, Field
 class Code(BaseModel):
     id: str = Field(default_factory=uuid4, alias="_id")
     code: str = Field(default_factory=lambda:generate_code())
-    expired: bool = False
+    expired: bool = Field(default_factory=lambda:False)
+    role: str = Field(...)
     uid: str = Field(...)
     class Config:
         allow_population_by_field_name = True

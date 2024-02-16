@@ -19,7 +19,10 @@ def create_code(request: Request, input_code: Code = Body(...), api_key: str = S
     uid = input_code.uid
     user = db["admins"].find_one({"firebase_uid": uid})
     if user is not None:
-        return create_one(COLLECTION_NAME, request, input_code, EXCEPTION_404_NOT_FOUND)
+        if input_code.role == 'admin' or input_code.role == 'owner':
+            return create_one(COLLECTION_NAME, request, input_code, EXCEPTION_404_NOT_FOUND)
+        else:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="The role is not valid.")
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"This user does not exist")
 
@@ -60,8 +63,8 @@ def update_code_validity(id: str, req: Request, res: Response, input_content=Bod
 
     raise EXCEPTION_404_NOT_FOUND
 
-@router.post(path="/validate")
-def validate_code(req: Request, res: Response, input_content:OnlyCode=Body(...), api_key: str = Security(get_api_key, scopes=[])):
+@router.post(path="/validate", response_model=Code, status_code=status.HTTP_202_ACCEPTED)
+def validate_code(req: Request, input_content:OnlyCode=Body(...), api_key: str = Security(get_api_key, scopes=[])):
 
     codes = list(db[COLLECTION_NAME].find({"code": input_content.code}))
     is_valid = False
@@ -70,7 +73,6 @@ def validate_code(req: Request, res: Response, input_content:OnlyCode=Body(...),
     for code in codes:
         if code["expired"] == False:
             valid_code = code
-            res.status_code = status.HTTP_202_ACCEPTED
             is_valid = True
             break
 
@@ -81,7 +83,7 @@ def validate_code(req: Request, res: Response, input_content:OnlyCode=Body(...),
             }})
 
             if pr.modified_count > 0:
-                return res
+                return valid_code
             else:
                 raise
         except:
