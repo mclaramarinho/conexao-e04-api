@@ -11,9 +11,10 @@ class Admin(BaseModel):
     name: str = Field(...)
     email: str = Field(...)
     role: str = Field(...)
-    last_login: str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
 
-    creation_date_timestamp: str = Field(default=last_login)
+
+    creation_date_timestamp: str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
+    last_login: str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
 
     class Config:
         allow_population_by_field_name = True
@@ -28,3 +29,4 @@ class Admin(BaseModel):
                 "creation_date_timestamp": "2024-01-01T00:00:00Z"
             }
         }
+
