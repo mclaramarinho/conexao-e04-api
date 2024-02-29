@@ -5,9 +5,9 @@ from datetime import datetime
 
 class ClassUpdate(BaseModel):
     name: Optional[str]
-    days: Optional[str]
-    start_time: Optional[str]
-    end_time: Optional[str]
+    days: Optional[List[str]]
+    start_time: Optional[List[str]]
+    end_time: Optional[List[str]]
     classroom: Optional[str]
     teacher: Optional[str]
     exam_1_timestamp: Optional[str]
