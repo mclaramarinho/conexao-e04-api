@@ -19,7 +19,7 @@ def create_class(request: Request, input_class: Class = Body(...), api_key: str 
 
 
 @router.put(path=PATHS["put"], response_description=RESPONSE_DES["put"], response_model=Class)
-def update_class(id: str, request: Request, input_class: ClassUpdate = Body(...)):
+def update_class(id: str, request: Request, input_class: ClassUpdate = Body(...), api_key: str = Security(get_api_key, scopes=[])):
     return update_one(id, COLLECTION_NAME, request, input_class, EXCEPTION_404_NOT_FOUND)
 
 
